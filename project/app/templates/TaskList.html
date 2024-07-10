@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        h1{
+            text-align: center;
+        }
+        a{
+            float:right;
+            margin-bottom:10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    <a href="{% url "Task_into_excell" %}"><button>Download in Excell</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th>Task Details</th>
+                <th>Task Type</th>
+                <th>User Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in page %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ task.task_details }}</td>
+                    <td>{{ task.task_type }}</td>
+                    <td>{{ task.User.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+        <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+    </div>
+    <div>
+        <span>
+            {% if page.has_previous %}
+                <a href="?page={{ page.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% if page.has_next %}
+                <a href="?page={{ page.next_page_number }}">Next</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>
